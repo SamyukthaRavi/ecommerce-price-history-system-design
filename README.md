@@ -1,150 +1,224 @@
-# E-commerce Price History System Design
+# E-commerce Price History Transparency System
 
-A system design exploration that looks at how e-commerce platforms can improve pricing transparency by providing built-in price history insights for products.
+A system design and product exploration that proposes a native price history feature for e-commerce platforms to improve pricing transparency and customer trust.
 
-This feature focuses on improving customer trust by allowing users to understand how product prices have changed over time.
+This repository explores the problem from a **product, system design, and program execution perspective**, similar to how a Technical Program Manager or Technical Product Manager would approach a real product feature.
 
 ---
+
+# 1. Problem Definition
 
 ## Problem Statement
 
 During major sale events on e-commerce platforms, products often show large discounts.
 
-However, users cannot easily verify how the price has changed historically because the platform does not display price history directly.
+However, users cannot easily determine whether the discounted price is actually a good deal because the platform does not provide visibility into historical pricing.
 
-As a result, many users rely on third-party tools or external websites to check product price history before making a purchase.
+As a result, many users rely on third-party tools or external websites to check price history before making a purchase.
 
-This creates a fragmented user experience and reduces trust in the platform.
+## Who Experiences This Problem
 
-Providing native price history insights directly inside the e-commerce platform can improve transparency and user confidence.
+• Online shoppers  
+• Budget-conscious buyers  
+• Deal hunters  
+• Frequent sale-event shoppers  
 
----
+## Why This Problem Matters
 
-## Proposed Solution
+Lack of pricing transparency can reduce customer confidence in discounts shown during sale events.
 
-Introduce a built-in **Price History Insight Feature** that allows users to view how product prices have changed over time.
+Users may delay purchases or leave the platform to verify price history elsewhere.
 
-To balance system performance and platform strategy, this feature will:
+## Current Limitations
 
-- Be available **only to platform subscribers**
-- Be visible **during major sale events**
-- Provide **price history graphs and trend summaries**
+Most major e-commerce platforms do not provide built-in historical price visibility.
 
-This approach improves trust while also adding value to the platform's subscription programs.
-
----
-
-## Example Scenario
-
-A user wants to buy a pair of headphones during a festive sale.
-
-The product page shows:
-
-Original Price: ₹5999  
-Sale Price: ₹3499
-
-If the user is a subscriber and visits during the sale event, they can see:
-
-Price Trend (Last 90 Days)
-
-Average Price: ₹4200  
-Lowest Price: ₹3499  
-Current Price: ₹3499
-
-They can also view a simple **price history graph** showing how the price changed over time.
-
-This helps the user make a more informed purchase decision without relying on external tools.
+Users depend on third-party tools to validate price trends, which creates a fragmented experience.
 
 ---
 
-## Target Users
+# 2. Product Goals & Success Metrics
 
-- Online shoppers
-- Budget-conscious buyers
-- Deal hunters
-- E-commerce platform subscribers
-- E-commerce platforms seeking to improve customer trust
+## Product Goals
+
+• Improve customer trust during sale events  
+• Help users make informed purchasing decisions  
+• Reduce dependency on external price tracking tools  
+• Increase conversion rates during major sales
+
+## Success Metrics
+
+| Metric | Target |
+|------|------|
+| Feature Adoption | 40% of sale-day subscribers |
+| Conversion Uplift | +8% during sale events |
+| Average Session Time | +10% |
+| Customer Trust Score | Improvement in post-purchase surveys |
 
 ---
 
-## Functional Requirements
+# 3. User Stories
+
+### User Story 1
+
+As a shopper  
+I want to see the historical price trend of a product  
+So that I can understand if the current price is a good deal.
+
+### User Story 2
+
+As a subscriber during a sale event  
+I want quick insights about price history  
+So that I can confidently decide whether to purchase immediately.
+
+### Acceptance Criteria
+
+• Display price history graph for last 90 days  
+• Highlight lowest price within selected period  
+• Provide summary insights such as average price and current price
+
+---
+
+# 4. Functional Requirements
 
 The system should:
 
 1. Track historical prices of products
 2. Store price changes over time
-3. Display a price history graph for eligible users
-4. Show price trend summaries (average price, lowest price, current price)
-5. Allow users to set price drop alerts
-6. Show the feature **only to subscribers**
-7. Display price insights primarily **during major sale events**
+3. Display price history graph for eligible users
+4. Show price trend summaries
+5. Allow users to set price alerts
+6. Restrict access to **subscribers**
+7. Enable feature primarily during **sale events**
 
 ---
 
-## Non-Functional Requirements
+# 5. Non-Functional Requirements
 
-- Scalability to track millions of products
-- High availability during major sale events
-- Fast loading price graphs on product pages
-- Reliable historical data collection
-- Efficient storage for large-scale price history data
+| Requirement | Description |
+|------------|------------|
+| Scalability | Support millions of products |
+| Availability | 99.9% uptime during sales |
+| Latency | Graph loads within 1 second |
+| Security | Access limited to eligible subscribers |
+| Reliability | Accurate historical price tracking |
 
 ---
 
-## High Level Architecture
+# 6. System Architecture
 
-The system can include the following components:
+The system consists of the following components:
 
 Client Application  
-Displays product pages and price history insights.
+Displays product page and price history insights.
 
 API Gateway  
-Handles incoming requests from the client.
+Handles incoming client requests.
 
 Subscription Service  
-Verifies if the user is eligible to access price insights.
+Validates if the user is eligible to access price history features.
 
 Price Tracking Service  
-Continuously records product price changes.
+Collects product price updates periodically.
 
 Price History Database  
-Stores historical price data for all products.
+Stores historical price data.
 
 Analytics Service  
-Processes historical price data to generate trend summaries.
+Generates price trend summaries.
 
 ---
 
-## Data Flow
+# 7. Data Flow
 
-1. Product prices are periodically captured by the Price Tracking Service.
-2. The price data is stored in the Price History Database.
-3. When a user opens a product page during a sale event, the client sends a request to the backend.
-4. The Subscription Service checks if the user is eligible for the feature.
-5. If eligible, the backend fetches price history data.
-6. The Analytics Service calculates trend summaries.
-7. The client displays the price history graph and summary to the user.
-
----
-
-## Possible Enhancements
-
-Future improvements could include:
-
-- AI-based price prediction
-- Personalized price alerts
-- Smart purchase recommendations
-- Multi-platform price comparisons
+1. Price Tracking Service captures product price changes.
+2. Historical prices are stored in the Price History Database.
+3. User opens a product page during a sale event.
+4. API Gateway processes the request.
+5. Subscription Service verifies user eligibility.
+6. Backend retrieves price history data.
+7. Analytics Service calculates price trends.
+8. Client displays graph and summary insights.
 
 ---
 
-## Author
-Samyuktha Ravichandran
+# 8. Design Decisions & Trade-offs
+
+## Decision
+
+Store price history using a **time-series database**.
+
+## Alternative Considered
+
+Traditional relational database.
+
+## Reason
+
+Time-series databases are optimized for storing and querying time-based data efficiently.
 
 ---
 
-## Purpose of This Project
+# 9. Edge Cases
 
-This repository is part of a personal learning series exploring how real-world product problems can be solved using system design and product thinking.
+Possible edge scenarios:
 
-The goal is to analyze everyday digital product challenges and design scalable solutions that improve user experience.
+• Product discontinued  
+• Flash sale price spikes  
+• Missing historical price data  
+• Incorrect seller pricing updates
+
+Handling these cases ensures system reliability.
+
+---
+
+# 10. Execution Plan
+
+| Phase | Feature |
+|------|------|
+| Phase 1 | Price data collection service |
+| Phase 2 | Historical price storage |
+| Phase 3 | Price trend analytics |
+| Phase 4 | Graph API |
+| Phase 5 | UI integration during sale events |
+
+---
+
+# 11. Risks & Mitigation
+
+| Risk | Mitigation |
+|----|----|
+| Incorrect price tracking | Validate using multiple price captures |
+| Storage cost growth | Compress historical data |
+| High traffic during sale events | Use caching and scalable infrastructure |
+
+---
+
+# 12. Monitoring & Metrics
+
+To ensure system reliability, monitor:
+
+• API response latency  
+• Price update success rate  
+• Graph load time  
+• Error rate during sale events  
+
+Monitoring helps maintain high availability during peak traffic.
+
+---
+
+# 13. Future Improvements
+
+Potential future enhancements:
+
+• AI-based price prediction  
+• Personalized deal recommendations  
+• Smart price alerts  
+• Cross-platform price comparison insights
+
+---
+
+# 14. Purpose of This Project
+
+This repository is part of a personal learning series exploring how real-world product challenges can be solved using **system design, product thinking, and program execution planning**.
+
+The goal is to demonstrate structured thinking similar to what Technical Program Managers and Technical Product Managers use when designing large-scale product features.
