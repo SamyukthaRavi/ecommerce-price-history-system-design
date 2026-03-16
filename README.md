@@ -217,7 +217,13 @@ Potential future enhancements:
 
 ---
 
-# 14. Purpose of This Project
+# 14. Author
+
+Samyuktha Ravichandran
+
+---
+
+# 15. Purpose of This Project
 
 This repository is part of a personal learning series exploring how real-world product challenges can be solved using **system design, product thinking, and program execution planning**.
 
